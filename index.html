@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Playable Ad_PlayableAd_1036 </title>
+  <title>Playable Ad - Fixed Splash Girl</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
+      width: 100%;
       background: #1a1a1a;
       display: flex;
       justify-content: center;
@@ -16,100 +18,149 @@
       overflow: hidden;
     }
 
+    /* Розумний контейнер 9:16 */
     .frame {
-      width: 350px;
-      height: 640px;
       position: relative;
-      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      max-width: calc(100vh * 9 / 16);
+      max-height: calc(100vw * 16 / 9);
       background: #000;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+      box-shadow: 0 0 50px rgba(0,0,0,0.8);
+      overflow: hidden;
     }
 
-    /* --- Splash Screen --- */
-    .splash {
+    /* --- Загальні стилі шарів --- */
+    .splash, .playable {
       position: absolute;
       inset: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 100;
-      transition: opacity 0.5s ease;
+      width: 100%;
+      height: 100%;
     }
-    .splash-bg {
+
+    .splash-bg, .background {
       position: absolute;
       inset: 0;
       background: url('assets/bg.png') center/cover no-repeat;
-      filter: blur(8px);
-      transform: scale(1.1);
       z-index: 0;
     }
-    .girl-splash {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      filter: blur(5px);
-      opacity: 0.7;
+
+    /* --- Splash Screen UI --- */
+    .splash {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between; 
+      z-index: 100;
+      transition: opacity 0.5s ease;
+      padding: 15% 0 20% 0; 
+      box-sizing: border-box;
     }
-    .girl-splash img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    .logo {
-      width: 380px;
-      height: 200px;
-      background: url('assets/title.png') center/contain no-repeat;
-      z-index: 7;
-      margin-bottom: 0px;
-      margin-top: -140px
-    }
+
+    .splash-bg { filter: blur(8px); transform: scale(1.1); }
+
     
+    .girl-splash-layer {
+        position: absolute;
+        inset: 0;
+        z-index: 1; 
+        pointer-events: none; 
+        filter: blur(2px); 
+        opacity: 0.8;
+    }
+    .girl-splash-layer img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    /* ------------------------------------------ */
+
+    .logo {
+      position: relative;
+      width: 95%;   
+      height: 30%;  
+      background: url('assets/title.png') center/contain no-repeat;
+      z-index: 10;
+      margin-top: 120px;
+      margin-bottom: -40px; 
+    }
+
     .start-btn { 
-      width: 400px;  
-      height: 140px;
+      position: relative;
+      width: 95%;   
+      height: 20%;  
       background: url('assets/start-btn.png') center/contain no-repeat; 
       border: none; 
       cursor: pointer;
       z-index: 10; 
       animation: pulseBtn 2s ease-in-out infinite; 
-      margin-top: -60px
+      margin-bottom: 200px; 
     }
 
-    @keyframes pulseBtn {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.08); } /* increases a little */
-    }
-
-
-    /* click effect */
-    .start-btn.pressed {
-      transform: scale(0.95);
-      filter: brightness(0.9);
-    }
-
-    /* hand */
+    /* Рука для головного екрану */
     .hand {
       position: absolute;
-      top: 65%;
-      left: 55%;
-      width: 90px;
-      height: 90px;
+      top: 55%;     
+      left: 50%;
+      width: 100px;
+      height: 100px;
       background: url('assets/hand-cursor.png') center/contain no-repeat;
       animation: tapHand 2s ease-in-out infinite;
       z-index: 11;
       pointer-events: none;
     }
 
-    @keyframes tapHand {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      40% { transform: translate(-10px, -100px) scale(0.95); }
-      50% { transform: translate(-10px, -100px) scale(0.95); }
+    @keyframes pulseBtn {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
     }
 
-    @keyframes tap {
+    
+    @keyframes tapHand {
       0%, 100% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(-10px, -20px) scale(0.9); }
+      40%, 60% { transform: translate(-10px, -20px) scale(0.9); }
+    }
+
+    /* --- Character & Gameplay --- */
+    .girl-container {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+    .girl-container img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain; 
+      opacity: 0;
+    }
+    .girl-container img.active {
+      opacity: 1;
+      animation: lively 4s ease-in-out infinite;
+    }
+
+    @keyframes lively {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.015); }
+    }
+
+    .hitbox {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      z-index: 50;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    /* Хітбокси у відсотках для точності */
+    .hitbox.shirt { top: 10%; height: 40%; }
+    .hitbox.pants { top: 50%; height: 40%; }
+
+    .contour {
+      pointer-events: none;
+      z-index: 40;
     }
 
     .blink { animation: blink 1.2s ease-in-out infinite; }
@@ -118,97 +169,50 @@
       50% { opacity: 1; }
     }
 
-    @keyframes lively {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.015); }
-    }
-
-    /* --- Playable Core --- */
-    .playable {
-      position: absolute;
-      inset: 0;
-      display: none;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-    .background {
-      position: absolute;
-      inset: 0;
-      background: url('assets/bg.png') center/cover no-repeat;
-      z-index: 0;
-    }
-    .girl-container {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-    }
-    .girl-container img {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: contain;
-      opacity: 0;
-      /*transition: opacity 0.4s ease-in-out;*/
-    }
-    .girl-container img.active {
-      opacity: 1;
-      animation: lively 4s ease-in-out infinite;
-    }
-
-    /* Hitboxes - The invisible clickable areas */
-    .hitbox {
-      position: absolute;
-      left: 0;
-      width: 100%;
-      height: 50%;
-      cursor: pointer;
-      z-index: 50;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .hitbox.shirt { top: 0; }
-    .hitbox.pants { bottom: 0; }
-
-    .contour {
-      pointer-events: none; /* Let clicks pass through to hitboxes */
-      z-index: 40;
-    }
-
-    /*----music-----*/
+    /* --- UI Elements --- */
     .music-btn {
       position: absolute;
-      top: 10px;   
-      right: 300px;
-      width: 40px;
-      height: 40px;
+      top: 15px;   
+      right: 15px;
+      width: 45px;
+      height: 45px;
       border: none;
-      background: #222;
+      background: rgba(0,0,0,0.5);
       color: #fff;
       font-size: 20px;
       border-radius: 50%;
       cursor: pointer;
       z-index: 200;
-      transition: background 0.3s;
-    }
-    .music-btn:hover {
-      background: #444;
     }
 
+    .final-text {
+      position: absolute;
+      top: 25%;
+      left: 40%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 15%;
+      background: url('assets/final-text.png') center/contain no-repeat;
+      opacity: 0;
+      z-index: 100;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+    }
+    .final-text.active { opacity: 1; }
 
-    /* --- CTA Final --- */
     .cta {
       position: absolute;
-      bottom: 180px;
+      bottom: 40%;
       left: 50%;
       transform: translateX(-50%);
       display: none;
-      flex-direction: column;
-      align-items: center;
+      width: 80%;
+      height: 12%;
       z-index: 100;
     }
     .cta button {
-      width: 280px;
-      height: 90px;
+      width: 100%;
+      height: 100%;
       background: url('assets/play-btn.png') center/contain no-repeat;
       border: none;
       cursor: pointer;
@@ -218,20 +222,6 @@
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.05); }
     }
-
-    .final-text {
-      position: absolute;
-      top: 180px;
-      left: 40%;
-      transform: translateX(-50%);
-      width: 300px;
-      height: 120px;
-      background: url('assets/final-text.png') center/contain no-repeat;
-      opacity: 0;
-      z-index: 100;
-      pointer-events: none;
-    }
-    .final-text.active { opacity: 1; transition: opacity 0.8s ease; }
   </style>
 </head>
 <body>
@@ -239,13 +229,17 @@
   <div class="frame">
     <div class="splash" id="splash">
       <div class="splash-bg"></div>
-      <div class="girl-splash"><img src="assets/girl_full.png"></div>
+      
+      <div class="girl-splash-layer">
+          <img src="assets/girl_full.png">
+          </div>
+      
       <div class="logo"></div>
-      <button class="start-btn" id="startBtn"></button>
+      <button class="start-btn"></button>
       <div class="hand"></div>
     </div>
 
-    <div class="playable" id="playable">
+    <div class="playable" id="playable" style="display: none; opacity: 0;">
       <div class="background"></div>
       <button id="musicToggle" class="music-btn">🔊</button>
 
@@ -276,10 +270,10 @@
   <script>
     const state = {
       pantsRemoved: false,
-      shirtRemoved: false
+      shirtRemoved: false,
+      gameStarted: false
     };
 
-    // Elements
     const elements = {
       splash: document.getElementById('splash'),
       playable: document.getElementById('playable'),
@@ -293,61 +287,39 @@
       finalText: document.getElementById('finalText'),
       bgMusic: document.getElementById('bgMusic'),
       removeSound: document.getElementById('removeSound'),
-      winSound: document.getElementById('winSound')
+      winSound: document.getElementById('winSound'),
+      musicToggle: document.getElementById('musicToggle')
     };
 
-    const musicToggle = document.getElementById('musicToggle');
-    const bgMusic = document.getElementById('bgMusic');
-
-    musicToggle.addEventListener('click', () => {
-      if (bgMusic.muted) {
-        bgMusic.muted = false;
-        musicToggle.textContent = '🔊'; // іконка звук увімкнено
-      } else {
-        bgMusic.muted = true;
-        musicToggle.textContent = '🔇'; // іконка звук вимкнено
-      }
+    // Music Logic
+    elements.musicToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      elements.bgMusic.muted = !elements.bgMusic.muted;
+      elements.musicToggle.textContent = elements.bgMusic.muted ? '🔇' : '🔊';
     });
 
+    elements.bgMusic.volume = 0.1;
 
-    // Init volumes
-    elements.bgMusic.volume = 0.08;
-    elements.removeSound.volume = 1.0;
-    elements.winSound.volume = 1.0;
+    // Start Game Function
+    const startAction = () => {
+      if (state.gameStarted) return;
+      state.gameStarted = true;
 
-    // Start Game
-    document.getElementById('startBtn').addEventListener('click', () => {
       elements.splash.style.opacity = '0';
       setTimeout(() => {
         elements.splash.style.display = 'none';
         elements.playable.style.display = 'block';
-        setTimeout(() => elements.playable.style.opacity = '1', 10);
+        setTimeout(() => elements.playable.style.opacity = '1', 50);
       }, 500);
       
       elements.bgMusic.muted = false;
-      elements.bgMusic.play().catch(e => console.log("Audio blocked"));
-    });
+      elements.bgMusic.play().catch(() => console.log("Audio waiting for interaction"));
+    };
 
-    function startGame() {
-      splash.style.opacity = '0';
-      setTimeout(() => {
-        splash.style.display = 'none';
-        playable.style.display = 'block';
-        setTimeout(() => playable.style.opacity = '1', 10);
-      }, 500);
+    // Клік у будь-якому місці splash екрану запускає гру
+    elements.splash.addEventListener('click', startAction);
 
-      elements.bgMusic.muted = false;
-      elements.bgMusic.play().catch(e => console.log("Audio blocked"));
-      audioStarted = true;
-    }
-
-    // 
-    splash.addEventListener('click', startGame);
-
-
-    // Unified Update Logic
     function updateVisuals() {
-      // Remove all active classes first
       [elements.girlBase, elements.girlNoPants, elements.girlNoShirt, elements.girlLingerie]
         .forEach(el => el.classList.remove('active'));
 
@@ -368,7 +340,6 @@
       elements.removeSound.play();
     }
 
-    // Interaction Handlers
     document.getElementById('shirtHitbox').addEventListener('click', () => {
       if (state.shirtRemoved) return;
       state.shirtRemoved = true;
@@ -389,7 +360,6 @@
       elements.finalText.classList.add('active');
       elements.cta.style.display = 'flex';
       elements.winSound.play();
-      // Disable further clicks on hitboxes
       document.querySelectorAll('.hitbox').forEach(h => h.style.display = 'none');
     }
 
