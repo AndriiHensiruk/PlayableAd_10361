@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Playable Ad_PlayableAd_1036 </title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #1a1a1a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .frame {
+      width: 350px;
+      height: 640px;
+      position: relative;
+      overflow: hidden;
+      background: #000;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+    }
+
+    /* --- Splash Screen --- */
+    .splash {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      transition: opacity 0.5s ease;
+    }
+    .splash-bg {
+      position: absolute;
+      inset: 0;
+      background: url('assets/bg.png') center/cover no-repeat;
+      filter: blur(8px);
+      transform: scale(1.1);
+      z-index: 0;
+    }
+    .girl-splash {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      filter: blur(5px);
+      opacity: 0.7;
+    }
+    .girl-splash img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .logo {
+      width: 380px;
+      height: 200px;
+      background: url('assets/title.png') center/contain no-repeat;
+      z-index: 7;
+      margin-bottom: 0px;
+      margin-top: -140px
+    }
+    
+    .start-btn { 
+      width: 400px;  
+      height: 140px;
+      background: url('assets/start-btn.png') center/contain no-repeat; 
+      border: none; 
+      cursor: pointer;
+      z-index: 10; 
+      animation: pulseBtn 2s ease-in-out infinite; 
+      margin-top: -60px
+    }
+
+    @keyframes pulseBtn {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); } /* increases a little */
+    }
+
+
+    /* click effect */
+    .start-btn.pressed {
+      transform: scale(0.95);
+      filter: brightness(0.9);
+    }
+
+    /* hand */
+    .hand {
+      position: absolute;
+      top: 65%;
+      left: 55%;
+      width: 90px;
+      height: 90px;
+      background: url('assets/hand-cursor.png') center/contain no-repeat;
+      animation: tapHand 2s ease-in-out infinite;
+      z-index: 11;
+      pointer-events: none;
+    }
+
+    @keyframes tapHand {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      40% { transform: translate(-10px, -100px) scale(0.95); }
+      50% { transform: translate(-10px, -100px) scale(0.95); }
+    }
+
+    @keyframes tap {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-10px, -20px) scale(0.9); }
+    }
+
+    .blink { animation: blink 1.2s ease-in-out infinite; }
+    @keyframes blink {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes lively {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.015); }
+    }
+
+    /* --- Playable Core --- */
+    .playable {
+      position: absolute;
+      inset: 0;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .background {
+      position: absolute;
+      inset: 0;
+      background: url('assets/bg.png') center/cover no-repeat;
+      z-index: 0;
+    }
+    .girl-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    .girl-container img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: contain;
+      opacity: 0;
+      /*transition: opacity 0.4s ease-in-out;*/
+    }
+    .girl-container img.active {
+      opacity: 1;
+      animation: lively 4s ease-in-out infinite;
+    }
+
+    /* Hitboxes - The invisible clickable areas */
+    .hitbox {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      cursor: pointer;
+      z-index: 50;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .hitbox.shirt { top: 0; }
+    .hitbox.pants { bottom: 0; }
+
+    .contour {
+      pointer-events: none; /* Let clicks pass through to hitboxes */
+      z-index: 40;
+    }
+
+    /*----music-----*/
+    .music-btn {
+      position: absolute;
+      top: 10px;   
+      right: 300px;
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: #222;
+      color: #fff;
+      font-size: 20px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 200;
+      transition: background 0.3s;
+    }
+    .music-btn:hover {
+      background: #444;
+    }
+
+
+    /* --- CTA Final --- */
+    .cta {
+      position: absolute;
+      bottom: 180px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      z-index: 100;
+    }
+    .cta button {
+      width: 280px;
+      height: 90px;
+      background: url('assets/play-btn.png') center/contain no-repeat;
+      border: none;
+      cursor: pointer;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .final-text {
+      position: absolute;
+      top: 180px;
+      left: 40%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 120px;
+      background: url('assets/final-text.png') center/contain no-repeat;
+      opacity: 0;
+      z-index: 100;
+      pointer-events: none;
+    }
+    .final-text.active { opacity: 1; transition: opacity 0.8s ease; }
+  </style>
+</head>
+<body>
+
+  <div class="frame">
+    <div class="splash" id="splash">
+      <div class="splash-bg"></div>
+      <div class="girl-splash"><img src="assets/girl_full.png"></div>
+      <div class="logo"></div>
+      <button class="start-btn" id="startBtn"></button>
+      <div class="hand"></div>
+    </div>
+
+    <div class="playable" id="playable">
+      <div class="background"></div>
+      <button id="musicToggle" class="music-btn">🔊</button>
+
+      <div class="girl-container">
+        <img src="assets/girl_full.png" id="girlBase" class="active">
+        <img src="assets/girl_no_pants.png" id="girlNoPants">
+        <img src="assets/girl_no_shirt.png" id="girlNoShirt">
+        <img src="assets/girl_lingerie.png" id="girlLingerie">
+
+        <img src="assets/contour_pants.png" id="contourPants" class="contour blink"> 
+        <img src="assets/contour_shirt.png" id="contourShirt" class="contour blink">
+        
+        <div id="shirtHitbox" class="hitbox shirt"></div> 
+        <div id="pantsHitbox" class="hitbox pants"></div>
+      </div>
+     
+      <div class="final-text" id="finalText"></div>
+      <div class="cta" id="cta">
+          <button onclick="goGame()"></button>
+      </div>
+    </div>
+  </div>
+
+  <audio id="bgMusic" src="assets/bg-music.mp3" loop muted></audio>
+  <audio id="removeSound" src="assets/remove.mp3"></audio>
+  <audio id="winSound" src="assets/win.mp3"></audio>
+
+  <script>
+    const state = {
+      pantsRemoved: false,
+      shirtRemoved: false
+    };
+
+    // Elements
+    const elements = {
+      splash: document.getElementById('splash'),
+      playable: document.getElementById('playable'),
+      girlBase: document.getElementById('girlBase'),
+      girlNoPants: document.getElementById('girlNoPants'),
+      girlNoShirt: document.getElementById('girlNoShirt'),
+      girlLingerie: document.getElementById('girlLingerie'),
+      contourPants: document.getElementById('contourPants'),
+      contourShirt: document.getElementById('contourShirt'),
+      cta: document.getElementById('cta'),
+      finalText: document.getElementById('finalText'),
+      bgMusic: document.getElementById('bgMusic'),
+      removeSound: document.getElementById('removeSound'),
+      winSound: document.getElementById('winSound')
+    };
+
+    const musicToggle = document.getElementById('musicToggle');
+    const bgMusic = document.getElementById('bgMusic');
+
+    musicToggle.addEventListener('click', () => {
+      if (bgMusic.muted) {
+        bgMusic.muted = false;
+        musicToggle.textContent = '🔊'; // іконка звук увімкнено
+      } else {
+        bgMusic.muted = true;
+        musicToggle.textContent = '🔇'; // іконка звук вимкнено
+      }
+    });
+
+
+    // Init volumes
+    elements.bgMusic.volume = 0.08;
+    elements.removeSound.volume = 1.0;
+    elements.winSound.volume = 1.0;
+
+    // Start Game
+    document.getElementById('startBtn').addEventListener('click', () => {
+      elements.splash.style.opacity = '0';
+      setTimeout(() => {
+        elements.splash.style.display = 'none';
+        elements.playable.style.display = 'block';
+        setTimeout(() => elements.playable.style.opacity = '1', 10);
+      }, 500);
+      
+      elements.bgMusic.muted = false;
+      elements.bgMusic.play().catch(e => console.log("Audio blocked"));
+    });
+
+    function startGame() {
+      splash.style.opacity = '0';
+      setTimeout(() => {
+        splash.style.display = 'none';
+        playable.style.display = 'block';
+        setTimeout(() => playable.style.opacity = '1', 10);
+      }, 500);
+
+      elements.bgMusic.muted = false;
+      elements.bgMusic.play().catch(e => console.log("Audio blocked"));
+      audioStarted = true;
+    }
+
+    // 
+    splash.addEventListener('click', startGame);
+
+
+    // Unified Update Logic
+    function updateVisuals() {
+      // Remove all active classes first
+      [elements.girlBase, elements.girlNoPants, elements.girlNoShirt, elements.girlLingerie]
+        .forEach(el => el.classList.remove('active'));
+
+      if (state.pantsRemoved && state.shirtRemoved) {
+        elements.girlLingerie.classList.add('active');
+        showFinal();
+      } else if (state.pantsRemoved) {
+        elements.girlNoPants.classList.add('active');
+      } else if (state.shirtRemoved) {
+        elements.girlNoShirt.classList.add('active');
+      } else {
+        elements.girlBase.classList.add('active');
+      }
+    }
+
+    function playRemoveSound() {
+      elements.removeSound.currentTime = 0;
+      elements.removeSound.play();
+    }
+
+    // Interaction Handlers
+    document.getElementById('shirtHitbox').addEventListener('click', () => {
+      if (state.shirtRemoved) return;
+      state.shirtRemoved = true;
+      elements.contourShirt.style.display = 'none';
+      playRemoveSound();
+      updateVisuals();
+    });
+
+    document.getElementById('pantsHitbox').addEventListener('click', () => {
+      if (state.pantsRemoved) return;
+      state.pantsRemoved = true;
+      elements.contourPants.style.display = 'none';
+      playRemoveSound();
+      updateVisuals();
+    });
+
+    function showFinal() {
+      elements.finalText.classList.add('active');
+      elements.cta.style.display = 'flex';
+      elements.winSound.play();
+      // Disable further clicks on hitboxes
+      document.querySelectorAll('.hitbox').forEach(h => h.style.display = 'none');
+    }
+
+    function goGame() { 
+      window.location.href = 'https://game-site.com'; 
+    }
+  </script>
+</body>
+</html>
