@@ -123,42 +123,48 @@
     }
 
     /* --- Character & Gameplay --- */
-   
-    .girl-container {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      transform-origin: bottom center;
-      animation: naturalSway 6s ease-in-out infinite;
-      will-change: transform;
-    }
+.girl-container {
+  position: absolute;
+  /* Фіксуємо контейнер чітко по нижньому краю */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  /* Точка опори — центр нижнього зрізу */
+  transform-origin: bottom center;
+  /* Тільки горизонтальне погойдування (skew), воно не відриває ноги від землі */
+  animation: organicSway 5s ease-in-out infinite;
+  will-change: transform;
+}
 
-    .girl-container img {
-      position: absolute;
-      bottom: 0; 
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      
-      object-position: bottom center;
-      opacity: 0;
-      
-    }
+.girl-container img {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  /* МИТТЄВА ПОЯВА: прибираємо transition */
+  opacity: 0;
+  pointer-events: none;
+}
 
-    .girl-container img.active {
-      opacity: 1;
-    }
+.girl-container img.active {
+  opacity: 1; /* З’являється миттєво */
+}
 
-  
-    @keyframes naturalSway {
-      0%, 100% { 
-        transform: scaleY(1) skewX(0deg); 
-      }
-      50% { 
-        transform: scaleY(1.01) skewX(0.5deg); 
-      }
-    }
+/* АНІМАЦІЯ: Тільки мікро-нахили вліво-вправо */
+@keyframes organicSway {
+  0%, 100% { 
+    transform: skewX(0deg); 
+  }
+  50% { 
+    /* 0.8 градуса достатньо, щоб "оживити", але не зламати картинку */
+    transform: skewX(0.8deg); 
+  }
+}
     .hitbox {
       position: absolute;
       left: 0;
