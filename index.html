@@ -127,23 +127,26 @@
       position: absolute;
       inset: 0;
       z-index: 1;
+        animation: lively 4s ease-in-out infinite;
+
     }
     .girl-container img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain; 
-      opacity: 0;
-    }
-    .girl-container img.active {
-      opacity: 1;
-      animation: lively 4s ease-in-out infinite;
-    }
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-position: center bottom;
+  opacity: 0;
+}
+.girl-container img.active {
+  opacity: 1;
+}
+
 
     @keyframes lively {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.015); }
+      50% { transform: scale(1.02); }
     }
 
     .hitbox {
@@ -212,7 +215,7 @@
     }
     .cta button {
       width: 120%;
-      height: 100%;
+      height: 120%;
       background: url('assets/play-btn.png') center/contain no-repeat;
       border: none;
       cursor: pointer;
@@ -298,7 +301,7 @@
       elements.musicToggle.textContent = elements.bgMusic.muted ? '🔇' : '🔊';
     });
 
-    elements.bgMusic.volume = 0.05;
+    elements.bgMusic.volume = 0.02;
 
     // Start Game Function
     const startAction = () => {
