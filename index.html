@@ -41,7 +41,7 @@
     .splash-bg, .background {
       position: absolute;
       inset: 0;
-      background: url('assets/bg.png') center/cover no-repeat;
+      background: url('assets/bg.webp') center/cover no-repeat;
       z-index: 0;
     }
 
@@ -79,18 +79,18 @@
     .logo {
       position: relative;
       width: 95%;   
-      height: 30%;  
+      height: 40%;  
       background: url('assets/title.png') center/contain no-repeat;
       z-index: 10;
       margin-top: 120px;
-      margin-bottom: -40px; 
+      margin-bottom: -60px; 
     }
 
     .start-btn { 
       position: relative;
-      width: 95%;   
-      height: 20%;  
-      background: url('assets/start-btn.png') center/contain no-repeat; 
+      width: 100%;   
+      height: 40%;  
+      background: url('assets/start-btn.webp') center/contain no-repeat; 
       border: none; 
       cursor: pointer;
       z-index: 10; 
@@ -211,7 +211,7 @@
       z-index: 100;
     }
     .cta button {
-      width: 100%;
+      width: 120%;
       height: 100%;
       background: url('assets/play-btn.png') center/contain no-repeat;
       border: none;
@@ -231,7 +231,7 @@
       <div class="splash-bg"></div>
       
       <div class="girl-splash-layer">
-          <img src="assets/girl_full.png">
+          <img src="assets/girl_full.webp">
           </div>
       
       <div class="logo"></div>
@@ -244,13 +244,13 @@
       <button id="musicToggle" class="music-btn">🔊</button>
 
       <div class="girl-container">
-        <img src="assets/girl_full.png" id="girlBase" class="active">
-        <img src="assets/girl_no_pants.png" id="girlNoPants">
-        <img src="assets/girl_no_shirt.png" id="girlNoShirt">
-        <img src="assets/girl_lingerie.png" id="girlLingerie">
+        <img src="assets/girl_full.webp" id="girlBase" class="active">
+        <img src="assets/girl_no_pants.webp" id="girlNoPants">
+        <img src="assets/girl_no_shirt.webp" id="girlNoShirt">
+        <img src="assets/girl_lingerie.webp" id="girlLingerie">
 
-        <img src="assets/contour_pants.png" id="contourPants" class="contour blink"> 
-        <img src="assets/contour_shirt.png" id="contourShirt" class="contour blink">
+        <img src="assets/contour_pants.webp" id="contourPants" class="contour blink"> 
+        <img src="assets/contour_shirt.webp" id="contourShirt" class="contour blink">
         
         <div id="shirtHitbox" class="hitbox shirt"></div> 
         <div id="pantsHitbox" class="hitbox pants"></div>
@@ -298,7 +298,7 @@
       elements.musicToggle.textContent = elements.bgMusic.muted ? '🔇' : '🔊';
     });
 
-    elements.bgMusic.volume = 0.1;
+    elements.bgMusic.volume = 0.05;
 
     // Start Game Function
     const startAction = () => {
@@ -364,7 +364,7 @@
     }
 
     function goGame() { 
-      window.location.href = 'https://game-site.com'; 
+      window.location.href = 'https://honeytoon.com/comic/teach-me-first/prologue'; 
     }
   </script>
 </body>
