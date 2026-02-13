@@ -123,32 +123,42 @@
     }
 
     /* --- Character & Gameplay --- */
+   
     .girl-container {
       position: absolute;
       inset: 0;
       z-index: 1;
-        animation: lively 4s ease-in-out infinite;
-
+      transform-origin: bottom center;
+      animation: naturalSway 6s ease-in-out infinite;
+      will-change: transform;
     }
+
     .girl-container img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-position: center bottom;
-  opacity: 0;
-}
-.girl-container img.active {
-  opacity: 1;
-}
-
-
-    @keyframes lively {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.02); }
+      position: absolute;
+      bottom: 0; 
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      
+      object-position: bottom center;
+      opacity: 0;
+      
     }
 
+    .girl-container img.active {
+      opacity: 1;
+    }
+
+  
+    @keyframes naturalSway {
+      0%, 100% { 
+        transform: scaleY(1) skewX(0deg); 
+      }
+      50% { 
+        transform: scaleY(1.01) skewX(0.5deg); 
+      }
+    }
     .hitbox {
       position: absolute;
       left: 0;
