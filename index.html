@@ -41,7 +41,7 @@
     .splash-bg, .background {
       position: absolute;
       inset: 0;
-      background: url('assets/bg.webp') center/cover no-repeat;
+      background: url('assets/bg_PGW.webp') center/cover no-repeat;
       z-index: 0;
     }
 
@@ -80,7 +80,7 @@
       position: relative;
       width: 95%;   
       height: 40%;  
-      background: url('assets/title_pt.png') center/contain no-repeat;
+      background: url('assets/title.png') center/contain no-repeat;
       z-index: 10;
       margin-top: 120px;
       margin-bottom: -60px; 
@@ -90,7 +90,7 @@
       position: relative;
       width: 100%;   
       height: 40%;  
-      background: url('assets/start-btn_pt.png') center/contain no-repeat; 
+      background: url('assets/start-btn.webp') center/contain no-repeat; 
       border: none; 
       cursor: pointer;
       z-index: 10; 
@@ -193,7 +193,7 @@
       transform: translateX(-50%);
       width: 80%;
       height: 15%;
-      background: url('assets/final-text_pt.png') center/contain no-repeat;
+      background: url('assets/final-text.png') center/contain no-repeat;
       opacity: 0;
       z-index: 100;
       pointer-events: none;
@@ -214,7 +214,7 @@
     .cta button {
       width: 150%;
       height: 150%;
-      background: url('assets/play-btn_pt.png') center/contain no-repeat;
+      background: url('assets/play-btn.png') center/contain no-repeat;
       border: none;
       cursor: pointer;
       animation: pulse 1.5s infinite;
@@ -232,7 +232,7 @@
       <div class="splash-bg"></div>
       
       <div class="girl-splash-layer">
-          <img src="assets/girl_full.webp">
+          <img src="assets/girl_full_PGW.webp">
           </div>
       
       <div class="logo"></div>
@@ -245,13 +245,13 @@
       <button id="musicToggle" class="music-btn">🔊</button>
 
       <div class="girl-container">
-        <img src="assets/girl_full.webp" id="girlBase" class="active">
-        <img src="assets/girl_no_pants.webp" id="girlNoPants">
-        <img src="assets/girl_no_shirt.webp" id="girlNoShirt">
-        <img src="assets/girl_lingerie.webp" id="girlLingerie">
+        <img src="assets/girl_full_PGW.webp" id="girlBase" class="active">
+        <img src="assets/girl_no_pants_PGW.webp" id="girlNoPants">
+        <img src="assets/girl_no_shirt_PGW.webp" id="girlNoShirt">
+        <img src="assets/girl_lingerie_PGW.webp" id="girlLingerie">
 
-        <img src="assets/contour_pants.webp" id="contourPants" class="contour blink"> 
-        <img src="assets/contour_shirt.webp" id="contourShirt" class="contour blink">
+        <img src="assets/contour_pants_PGW.webp" id="contourPants" class="contour blink"> 
+        <img src="assets/contour_shirt_PGW.webp" id="contourShirt" class="contour blink">
         
         <div id="shirtHitbox" class="hitbox shirt"></div> 
         <div id="pantsHitbox" class="hitbox pants"></div>
@@ -266,7 +266,7 @@
 
   <audio id="bgMusic" src="assets/bg-music.mp3" loop muted></audio>
   <audio id="removeSound" src="assets/remove.mp3"></audio>
-  <audio id="winSound" src="assets/win_pt.mp3"></audio>
+  <audio id="winSound" src="assets/win.mp3"></audio>
 
   <script>
     const state = {
@@ -365,7 +365,7 @@
     }
 
     function goGame() { 
-      window.location.href = 'https://honeytoon.com/pt/comic-video/ensina-me-primeiro?n=1'; 
+      window.location.href = 'https://honeytoon.com/video-comic/prank-goes-wrong?n=1'; 
     }
   </script>
 </body>
